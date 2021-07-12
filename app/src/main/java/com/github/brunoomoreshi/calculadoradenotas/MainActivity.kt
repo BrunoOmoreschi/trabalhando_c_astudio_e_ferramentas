@@ -1,5 +1,6 @@
 package com.github.brunoomoreshi.calculadoradenotas
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -21,20 +22,43 @@ class MainActivity : AppCompatActivity() {
         val resultado = tvResults
 
         btCalcular.setOnClickListener {
-            val NotaOne =Integer.parseInt(etNotaOne.text.toString())
-            val NotaTwo =Integer.parseInt(etNotaTwo.text.toString())
-            val Faltas = Integer.parseInt(etFaltas.text.toString())
-            val Media = (NotaOne + NotaTwo)/2
 
 
-            if (NotaOne>10 || NotaTwo > 10){
-                resultado.setText("Foi digitado um valor acima de 10 para as notas!")
+            val notaOne =Integer.parseInt(etNotaOne.text.toString())
+            val notaTwo =Integer.parseInt(etNotaTwo.text.toString())
+            val faltas = Integer.parseInt(etFaltas.text.toString())
+            val media = (notaOne + notaTwo)/2
+
+            //Variaveis que vou usar para verificar se o que foi digitado é numérico. ACHO q pode ter maneiras mais curtas, mas acho essa mais readable.
+            val klaseCkOne = (notaOne::class.simpleName).toString()
+            val klaseCkTwo = (notaOne::class.simpleName).toString()
+            val klaseCkFaltas = (notaOne::class.simpleName).toString()
+
+            fun ckScore (){
+                if (notaOne > 10 || notaTwo > 10){
+                    //To ligado que devia colocar em uma string para facilitar a tradução, mas esse não é o objetivo desse exercicio...
+                    resultado.setText("Foi digitado um valor acima de 10 para as notas!")
+                }
+                else if (notaOne == null || notaTwo == null){
+                    resultado.setText("Não foram digitados valores suficientes para a checagem.")
+                    resultado.setTextColor(Color.RED)
+                }
+                else if (media >= 6 && faltas <= 10){
+                    resultado.setText("Aluno foi Aprovado "+ "\n" + "Nota final: ${media}"+ "\n" + "Faltas: ${faltas} ")
+                    resultado.setTextColor(Color.GREEN)
+                }
+                else {
+                    resultado.setText("Aluno foi Reprovado "+ "\n" + "Nota final: ${media}"+ "\n" + "Faltas: ${faltas} ")
+                    resultado.setTextColor(Color.RED)
+                }
             }
-            else if (Media >=6 && Faltas <= 10){
-                resultado.setText("Aluno foi Aprovado "+ "\n" + "Nota final: ${Media}"+ "\n" + "Faltas: ${Faltas} ")
+            if (klaseCkOne != "String" && klaseCkTwo != "String" && klaseCkFaltas != "String" ){
+                ckScore ()
             }
-            else {
-                resultado.setText("Aluno foi Reprovado "+ "\n" + "Nota final: ${Media}"+ "\n" + "Faltas: ${Faltas} ")
+            //Na teoria esse else deveria avisar que foi digitado um valor não numérico. Mas o app crasha antes... talvez seja algum metodo de conversão que não está aguentando a exception...
+            else{
+                resultado.setText("Foi digitado algo que não é um número.")
+                resultado.setTextColor(Color.RED)
             }
         }
     }
