@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">calculadoraDeNotas</string>
+    <string name="etNotaOne_txt">Nota 1</string>
+    <string name="etNotaTwo_txt">Nota 2</string>
+    <string name="etFaltas_txt">Número de faltas</string>
+    <string name="btCalc_txt">CALCULAR</string>
+    <string name="appHint">Digite os valores acima e toque em calcular</string>
+</resources>
